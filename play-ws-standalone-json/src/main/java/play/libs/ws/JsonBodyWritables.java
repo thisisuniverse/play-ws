@@ -33,7 +33,7 @@ public interface JsonBodyWritables {
     default BodyWritable<ByteString> body(JsonNode node, ObjectMapper objectMapper) {
         try {
             Object json = objectMapper.readValue(node.toString(), Object.class);
-            byte[] bytes = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsBytes(json);
+            byte[] bytes = objectMapper.writer().writeValueAsBytes(json);
             return new InMemoryBodyWritable(ByteString.fromArrayUnsafe(bytes), "application/json");
         } catch (Exception e) {
             throw new IllegalStateException(e);
